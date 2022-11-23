@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
         
-        <FirstComponent displaytext="Edited data"/>
+
         <Timer/>
       </div>
     );
