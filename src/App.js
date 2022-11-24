@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import FirstComponent from './first-component';
-import Timer from './timer';
+import StopWatch from './StopWatch.jsx';
 import React, {Component} from 'react';
 
 
@@ -10,8 +9,8 @@ class App extends Component {
     return (
       <div className="App">
         
-
-        <Timer/>
+        
+        <StopWatch/>
       </div>
     );
   }
