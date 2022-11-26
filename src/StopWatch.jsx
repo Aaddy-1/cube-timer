@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Timer from '/Users/aadeesh/Programming/cube-timer/src/timer.jsx';
 
 // Functional Components
@@ -10,76 +10,70 @@ function StopWatch() {
     // useState sets the default value for the variable, not the function
     // We set isPause to be true initially
     const [isPaused, setIsPaused] = useState(true);
-    const [isActive, setIsActive] = useState(false);
-    // We set the currTime to be 0 initially
-    const [currTime, setCurrTime] = useState(0);
-    // Defining the text on the pause/resume button
-    const [pauseText] = useState("Pause/Resume");
-    // Defining the text on the rest function
+    const [stopText] = useState("Stop");
+    // Defining the text on the reset function
     const [resetText] = useState("Reset");
     // Defining the text for the Start Button
     const [startText] = useState("Start");
+    // Defining the startTime for the timer;
+    // We use node References, references in node are basically like states
+    // Since we are not interacting with the front end in any way using the startTime variable, we will use referecnes instead of states
+    const [displayTime, setDisplayTime] = useState(0);
+
+    const startTimeRef = useRef(0);
+
 
     useEffect(() => {
-        // We initially set the interval to null each time the function is called
-        //console.log(currTime);
-        // We define a variable called interval and set it to null, THIS IS IMPORTANT
         let interval = null;
-        if ((isActive) && (isPaused === false)) {
-            // We set the value of this variable to our setinterval function so that we can stop it in case we want to pause/reset
+        let currentTime = new Date().getTime();
+        if (isPaused === false) {
+
             interval = setInterval(() => {
-                // We take a copy of currTime so that we do not modify currTime
-                // We increment the time by 10 every 10 milliseconds
-                setCurrTime((currTime) => currTime + 50)
-            }, 50);
+                setDisplayTime(currentTime - startTimeRef.current);
+            }, 500);
         }
-        // Else we will stop increasing the time by using clearInterval
         else {
-            console.log("trigerred");
-            // Stopping the above mentioned interval method using clearInterval();
             clearInterval(interval);
         }
         return () => {
             clearInterval(interval);
         }
+
     });
 
 
     // handling the pause/resume button, we're gonna control everything with just one button for now
     const start = () => {
-        setIsActive(true);
+        // We unpause the timer
         setIsPaused(false);
+        // We get the time at which the timer started
+        startTimeRef.current = new Date().getTime();
+
     }
     
-    const pauseResume = () => {
-        setIsPaused(!isPaused);
-        console.log(isPaused, isActive);
+    const stop = () => {
+        // We pause/unpause the timer
+        setIsPaused(true);
+        // We get the time at which the timer started
     }
 
     // handling the reset button
 
     const reset = () => {
-        // We deactivate the timer
-        setIsActive(false)
-        
-        // // We pause the timer
-        // setIsPaused(true);
-
-        // We set the currTime back to 0
-        setCurrTime(0);
-
+        setDisplayTime(0);
     }
 
     
         
     return (
         // We will add the timer element inside the stopWatch element
-        <div className = "stopWatch">
-            <Timer time={currTime}/>
+        <div className = "stopwatch">
+            <Timer time={displayTime}/>
             <button class="startButton" onClick={start}> {startText} </button>
-            <button class="pauseButton" onClick={pauseResume}> {pauseText} </button>
+            <button class="stopButton" onClick={stop}> {stopText} </button>
             <button class="resetButton" onClick={reset}> {resetText} </button>
         </div>
+        
     )
 }
 export default StopWatch;
