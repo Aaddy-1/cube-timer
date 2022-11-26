@@ -30,7 +30,7 @@ function StopWatch() {
 
             interval = setInterval(() => {
                 setDisplayTime(currentTime - startTimeRef.current);
-            }, 500);
+            }, 25);
         }
         else {
             clearInterval(interval);
