@@ -29,7 +29,7 @@ export default function Timer(props) {
                 {minutes + ":"}
             </div>
             <div className="seconds">
-                {seconds + ":"}
+                {seconds + "."}
             </div>
             <div className="mili-sec">
                 {miliSeconds}

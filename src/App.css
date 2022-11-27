@@ -1,5 +1,5 @@
 .App{
-  background-image: linear-gradient(to bottom right, orange, red);
+  background-image: linear-gradient(orange, rgb(249, 116, 138));
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -7,4 +7,3 @@
   align-items: center;
   justify-content: center;
   }
-  
